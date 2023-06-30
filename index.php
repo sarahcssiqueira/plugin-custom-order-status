@@ -15,39 +15,6 @@
  * Update URI:        https://sarahjobs.com/wordpress/plugins/custom-order-status/update
  */
 
-new custom_orders_status();
+require WP_PLUGIN_DIR . '/custom-order-status/class-custom-orders-status.php';
 
-class custom_orders_status {
-
-	function __construct() {
-
-		add_action( 'init', array( $this, 'register_on_production_order_status' ) );
-		add_filter( 'wc_order_statuses', array( $this, 'add_on_production_order_statuses' ) );
-
-	}
-
-	public function register_on_production_order_status() {
-		register_post_status(
-			'wc-on-production',
-			array(
-				'label'                     => 'My Custom Status',
-				'public'                    => true,
-				'show_in_admin_status_list' => true,
-				'show_in_admin_all_list'    => true,
-				'exclude_from_search'       => false
-			)
-		);
-	}
-
-	public function add_on_production_order_statuses( $order_statuses ) {
-		$new_order_statuses = array();
-		foreach ( $order_statuses as $key => $status ) {
-			$new_order_statuses[ $key ] = $status;
-			if ( 'wc-processing' === $key ) {
-				$new_order_statuses['wc-on-production'] = 'My Custom Status';
-			}
-		}
-		return $new_order_statuses;
-	}
-
-}
+new Custom_Orders_Status();
