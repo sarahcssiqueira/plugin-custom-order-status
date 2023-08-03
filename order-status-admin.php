@@ -16,10 +16,9 @@
  *
  * @package OrderStatusAdmin
  * @author sarahcssiqueira
- *
  */
 
-defined( 'ABSPATH' ) || exit;
+defined( 'ABSPATH' ) || exit; // Exit if accessed directly.
 
 
 /**
