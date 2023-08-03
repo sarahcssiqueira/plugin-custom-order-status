@@ -19,45 +19,40 @@ class Init {
 	public static function initialize() {
 
 		$self = new self();
-		add_action( 'init', [ $self, 'register_new_order_status' ] );
-		add_action( 'init', [ $self, 'register_new_order_status_two' ] );
-		add_filter( 'wc_order_statuses', [ $self, 'add_status_to_list' ] );
+		add_action( 'init', array( $self, 'register_new_order_status' ) );
+		add_filter( 'wc_order_statuses', array( $self, 'add_status_to_list' ) );
 
 	}
 
 	/**
-	 * Register new order status
+	 * Register new orders status
 	 */
 	public function register_new_order_status() {
+
 		register_post_status(
 			'wc-custom-status',
-			[
-				'label'                     => 'My Custom Status',
+			array(
+				'label'                     => __( 'My Custom Status' ),
 				'public'                    => true,
 				'show_in_admin_status_list' => true,
 				'show_in_admin_all_list'    => true,
 				'exclude_from_search'       => false,
 				'label_count'               => _n_noop( 'My Custom Status <span class="count">(%s)</span>', 'My Custom Status <span class="count">(%s)</span>' ),
 
-			]
+			)
 		);
-	}
 
-	/**
-	 * Register other new order status
-	 */
-	public function register_new_order_status_two() {
 		register_post_status(
 			'wc-custom-status-two',
-			[
-				'label'                     => 'My Custom Status Two',
+			array(
+				'label'                     => __( 'My Custom Status Two' ),
 				'public'                    => true,
 				'show_in_admin_status_list' => true,
 				'show_in_admin_all_list'    => true,
 				'exclude_from_search'       => false,
 				'label_count'               => _n_noop( 'My Custom Status Two <span class="count">(%s)</span>', 'My Custom Status <span class="count">(%s)</span>' ),
 
-			]
+			)
 		);
 	}
 
@@ -65,11 +60,11 @@ class Init {
 	 * Add the new custom order status to the existing WooCommerce
 	 * order statuses array.
 	 *
-	 * @param string $order_status sets order status.
+	 * @param string $order_status - order status.
 	 */
 	public function add_status_to_list( $order_status ) {
 
-		$new_order_statuses = [];
+		$new_order_statuses = array();
 
 		foreach ( $order_status as $id => $label ) {
 
